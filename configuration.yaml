@@ -1,0 +1,196 @@
+- name: secrets
+  type: regex
+  part: response  
+  regex:
+  # Google API Key
+  - (AIza[0-9A-Za-z-_]{35})
+  # Firebase Key
+  - (AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140})
+  # reCAPTCHA Key
+  - (6L[0-9A-Za-z-_]{38}|6[0-9a-zA-Z_-]{39})
+  # OAuth Token
+  - (ya29\.[0-9A-Za-z\-_]+)
+  # AWS Access Key
+  - (A[SK]IA[0-9A-Z]{16})
+  # AWS Secret Key
+  - (amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
+  # S3 Bucket
+  - (s3\.amazonaws\.com[/]+|[a-zA-Z0-9_-]*\.s3\.amazonaws\.com)
+  # Facebook Access Token
+  - (EAACEdEose0cBA[0-9A-Za-z]+)
+  # Basic Authentication
+  - (basic [a-zA-Z0-9=:_\+\/-]{5,100})
+  # Bearer Token
+  - (bearer [a-zA-Z0-9_\-\.=:_\+\/]{5,100})
+  # Generic API Key
+  - (api[key|_key|\s+]+[a-zA-Z0-9_\-]{5,100})
+  # Mailgun API Key
+  - (key-[0-9a-zA-Z]{32})
+  # Slack Token
+  - (\"api_token\":\"(xox[a-zA-Z]-[a-zA-Z0-9-]+)\")
+  # RSA Private Key
+  - (-----BEGIN RSA PRIVATE KEY-----)
+  # Generic Private Key
+  - ([-]+BEGIN [^\s]+ PRIVATE KEY[-]+[\s]*[^-]*[-]+END [^\s]+ PRIVATE KEY[-]+)
+  # JWT Token
+  - (ey[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$)
+  # Password Patterns
+  - (?i)(password\s*[`=:\"]+\s*[^\s]+|password is\s*[`=:\"]*\s*[^\s]+|pwd\s*[`=:\"]*\s*[^\s]+|passwd\s*[`=:\"]+\s*[^\s]+)
+  # UUID
+  - ([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})
+  # Credit Card Number
+  - (\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b)
+
+
+- name: naming
+- type: regex
+- part: response
+- regex:
+  # Email Address
+  - ([\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,})
+  # IPv4 Address
+  - (\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b)
+  # IPv6 Address
+  - (\b([a-f0-9:]+:+)+[a-f0-9]+\b)
+
+- name: comments
+  type: regex
+  part: response
+  regex:
+  - <!--[\s\S]*?-->       # Matches HTML comments
+  - //.*?$                # Matches single-line JavaScript comments
+  - /\*[\s\S]*?\*/        # Matches multi-line JavaScript comments
+  
+- name: requests
+  type: regex
+  part: response
+  matchers:
+    - type: path
+      condition: endswith
+      value: .js
+  regex:
+    - (?s)new\s+XMLHttpRequest\([^)]*\)[\s\S]*?\.open\([^)]*\)[\s\S]*?\.send\([^)]*\)
+    - (?s)fetch\s*\(\s*['"]([^'"]+)['"]\s*(?:,\s*{[^}]*?})?\s*\)
+    - (?s)\$\s*\.ajax\s*\(\s*{[^}]*?url\s*:\s*['"]([^'"]+)['"][^}]*?}\s*\)
+    - (?s)fetch\s*\(\s*['"]([^'"]+)['"]\s*,\s*\{[^}]*?method\s*:\s*['"]([^'"]+)['"][^}]*?headers\s*:\s*\{[^}]*?\}(?:[^}]*?body\s*:\s*[^}]*?)?\s*\}
+
+
+- name: jslinks
+  type: regex
+  part: response
+  matchers:
+    - type: path
+      condition: endswith
+      value: .js
+  regex:
+    - (?:"|')(((?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|((?:/|\.\./|\./)[^"'><,;| *()(%%$^/\\\[\]][^"'><,;|()]{1,})|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{1,}\.(?:[a-zA-Z]{1,4}|action)(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{3,}(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-]{1,}\.(?:php|asp|aspx|jsp|json|action|html|js|txt|xml)(?:[\?|#][^"|']{0,}|)))(?:"|')
+    - fetch\s*\(\s*['"]([^'"]+)['"]
+    - (?:url\(['"]?([^'"\)]+)['"]?\))|(?:href\s*=\s*['"]([^'"]+)['"])|(?:src\s*=\s*['"]([^'"]+)['"])
+    - (?:https?:\/\/[^\s"'()<>]+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- name: secrets
+  type: regex
+  part: response  
+  regex:
+  # Google API Key
+  - (AIza[0-9A-Za-z-_]{35})
+  # Firebase Key
+  - (AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140})
+  # reCAPTCHA Key
+  - (6L[0-9A-Za-z-_]{38}|6[0-9a-zA-Z_-]{39})
+  # OAuth Token
+  - (ya29\.[0-9A-Za-z\-_]+)
+  # AWS Access Key
+  - (A[SK]IA[0-9A-Z]{16})
+  # AWS Secret Key
+  - (amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
+  # S3 Bucket
+  - (s3\.amazonaws\.com[/]+|[a-zA-Z0-9_-]*\.s3\.amazonaws\.com)
+  # Facebook Access Token
+  - (EAACEdEose0cBA[0-9A-Za-z]+)
+  # Basic Authentication
+  - (basic [a-zA-Z0-9=:_\+\/-]{5,100})
+  # Bearer Token
+  - (bearer [a-zA-Z0-9_\-\.=:_\+\/]{5,100})
+  # Generic API Key
+  - (api[key|_key|\s+]+[a-zA-Z0-9_\-]{5,100})
+  # Mailgun API Key
+  - (key-[0-9a-zA-Z]{32})
+  # Slack Token
+  - (\"api_token\":\"(xox[a-zA-Z]-[a-zA-Z0-9-]+)\")
+  # RSA Private Key
+  - (-----BEGIN RSA PRIVATE KEY-----)
+  # Generic Private Key
+  - ([-]+BEGIN [^\s]+ PRIVATE KEY[-]+[\s]*[^-]*[-]+END [^\s]+ PRIVATE KEY[-]+)
+  # JWT Token
+  - (ey[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.[A-Za-z0-9-_.+/=]*$)
+  # Password Patterns
+  - (?i)(password\s*[`=:\"]+\s*[^\s]+|password is\s*[`=:\"]*\s*[^\s]+|pwd\s*[`=:\"]*\s*[^\s]+|passwd\s*[`=:\"]+\s*[^\s]+)
+  # UUID
+  - ([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})
+  # Credit Card Number
+  - (\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b)
+
+
+- name: naming
+- type: regex
+- part: response
+- regex:
+  # Email Address
+  - ([\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,})
+  # IPv4 Address
+  - (\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b)
+  # IPv6 Address
+  - (\b([a-f0-9:]+:+)+[a-f0-9]+\b)
+
+- name: comments
+  type: regex
+  part: response
+  regex:
+  - <!--[\s\S]*?-->       # Matches HTML comments
+  - //.*?$                # Matches single-line JavaScript comments
+  - /\*[\s\S]*?\*/        # Matches multi-line JavaScript comments
+  
+- name: requests
+  type: regex
+  part: response
+  matchers:
+    - type: path
+      condition: endswith
+      value: .js
+  regex:
+    - (?s)new\s+XMLHttpRequest\([^)]*\)[\s\S]*?\.open\([^)]*\)[\s\S]*?\.send\([^)]*\)
+    - (?s)fetch\s*\(\s*['"]([^'"]+)['"]\s*(?:,\s*{[^}]*?})?\s*\)
+    - (?s)\$\s*\.ajax\s*\(\s*{[^}]*?url\s*:\s*['"]([^'"]+)['"][^}]*?}\s*\)
+    - (?s)fetch\s*\(\s*['"]([^'"]+)['"]\s*,\s*\{[^}]*?method\s*:\s*['"]([^'"]+)['"][^}]*?headers\s*:\s*\{[^}]*?\}(?:[^}]*?body\s*:\s*[^}]*?)?\s*\}
+
+
+- name: jslinks
+  type: regex
+  part: response
+  matchers:
+    - type: path
+      condition: endswith
+      value: .js
+  regex:
+    - (?:"|')(((?:[a-zA-Z]{1,10}://|//)[^"'/]{1,}\.[a-zA-Z]{2,}[^"']{0,})|((?:/|\.\./|\./)[^"'><,;| *()(%%$^/\\\[\]][^"'><,;|()]{1,})|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{1,}\.(?:[a-zA-Z]{1,4}|action)(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-/]{1,}/[a-zA-Z0-9_\-/]{3,}(?:[\?|#][^"|']{0,}|))|([a-zA-Z0-9_\-]{1,}\.(?:php|asp|aspx|jsp|json|action|html|js|txt|xml)(?:[\?|#][^"|']{0,}|)))(?:"|')
+    - fetch\s*\(\s*['"]([^'"]+)['"]
+    - (?:url\(['"]?([^'"\)]+)['"]?\))|(?:href\s*=\s*['"]([^'"]+)['"])|(?:src\s*=\s*['"]([^'"]+)['"])
+    - (?:https?:\/\/[^\s"'()<>]+)
+
+
