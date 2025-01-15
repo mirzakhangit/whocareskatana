@@ -1,11 +1,10 @@
+# katana file for conf
 - name: secrets
   type: regex
   part: response  
   regex:
-  # Google API Key
-  - (AIza[0-9A-Za-z-_]{35})
-  # Firebase Key
-  - (AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140})
+  - (AIza[0-9A-Za-z-_]{35})  # Google API Key
+  - (AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140}) # Firebase Key
   # reCAPTCHA Key
   - (6L[0-9A-Za-z-_]{38}|6[0-9a-zA-Z_-]{39})
   # OAuth Token
@@ -39,7 +38,7 @@
   # UUID
   - ([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})
   # Credit Card Number
-  - (\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b)
+  - (\b\d{4}(| |-)\d{4}\\1\d{4}\\1\d{4}\b)
 
 
 - name: naming
